@@ -1,6 +1,18 @@
 # Ichiki back
 
 
+## [0.2.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.1.1...v0.2.0) (2021-07-05)
+
+
+### Features
+
+* implement production version for Heroku ([f6cdf99](https://github.com/AnthonyLzq/ichiki-back/commit/f6cdf9927d6a5579995a4f25b64cd9364b13d009))
+
+
+### Bug Fixes
+
+* remove @type/mongoose, decrease @types/node to 14 version and fixed imports ([7f79ab0](https://github.com/AnthonyLzq/ichiki-back/commit/7f79ab02d1f1da9d5846272f35b9f6441b5e983e))
+
 ### [0.1.1](https://github.com/AnthonyLzq/ichiki-back/compare/v0.1.0...v0.1.1) (2021-07-05)
 
 
