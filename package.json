@@ -1,0 +1,58 @@
+{
+  "name": "ichiki-back",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "description": "Ichiki backend",
+  "scripts": {
+    "build:dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "lint": "eslint src/* --ext .ts",
+    "service": "nodemon",
+    "start": "node dist/index.js",
+    "version": "auto-changelog -p -o changelog.md && git add changelog.md"
+  },
+  "author": "AnthonyLzq <sluzquinosa@uni.pe>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "joi": "^17.4.0",
+    "mongoose": "^5.13.2",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "@types/http-errors": "^1.8.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^16.0.0",
+    "@types/swagger-ui-express": "^4.1.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "auto-changelog": "^2.3.0",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-sort-keys-fix": "^1.1.1",
+    "eslint-plugin-typescript-sort-keys": "^1.7.0",
+    "nodemon": "^2.0.9",
+    "prettier": "^2.3.2",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyLzq/ichiki-back.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AnthonyLzq/ichiki-back/issues"
+  },
+  "homepage": "https://github.com/AnthonyLzq/ichiki-back#readme"
+}

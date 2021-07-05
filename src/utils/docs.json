@@ -1,0 +1,196 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ichiki backend",
+    "description": "Documentation of Ichiki backend",
+    "contact": {
+      "email": "acecom.soporte@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://ichiki-back.herokuapp.com/api/",
+      "description": "Ichiki dev API"
+    },
+    {
+      "url": "http://localhost:1996/api",
+      "description": "Ichiki local API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "storer",
+      "description": "Operations related to the storer."
+    }
+  ],
+  "paths": {
+    "/storer/login": {
+      "post": {
+        "tags": [
+          "storer"
+        ],
+        "summary": "Storer login",
+        "operationId": "storerLogin",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/DtoStorer"
+        },
+        "responses": {
+          "200": {
+            "description": "Storer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorerLoginSuccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Storer": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "description": "Number of DNI, CE or others."
+          },
+          "name": {
+            "type": "string"
+          },
+          "warehouseIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "Warehouses that where registered by the user"
+          }
+        }
+      },
+      "StorerLoginSuccess": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "$ref": "#/components/schemas/Storer"
+              }
+            }
+          }
+        }
+      },
+      "DefaultSuccess": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "DefaultError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "default": true
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "DtoStorer": {
+        "description": "Storer email and password",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Storer id"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Storer password"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      }
+    }
+  }
+}
