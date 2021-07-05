@@ -1,7 +1,7 @@
 interface DtoProducer {
-  country : string
+  country?: string
   email   : string
-  name    : string
+  name?   : string
   password: string
 }
 

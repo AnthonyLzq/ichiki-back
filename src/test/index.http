@@ -24,3 +24,14 @@ Content-Type: application/json
     "name": "ACECOM"
   }
 }
+
+### Testing producer signIn route
+POST http://localhost:1996/api/producer/login
+Content-Type: application/json
+
+{
+  "args": {
+    "email": "holi6@boli.com",
+    "password": "holi"
+  }
+}

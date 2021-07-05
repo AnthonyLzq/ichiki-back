@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import { sign } from 'node:crypto'
 
 const signIn = Joi.object().keys({
   email   : Joi.string().required().email(),

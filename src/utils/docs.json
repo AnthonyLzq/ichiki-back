@@ -41,7 +41,7 @@
         "summary": "Storer login",
         "operationId": "storerLogin",
         "requestBody": {
-          "$ref": "#/components/requestBodies/DtoStorer"
+          "$ref": "#/components/requestBodies/DtoLogin"
         },
         "responses": {
           "200": {
@@ -104,6 +104,60 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StorerLoginSuccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producer/login": {
+      "post": {
+        "tags": [
+          "producer"
+        ],
+        "summary": "Producer login",
+        "operationId": "producerLogin",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/DtoLogin"
+        },
+        "responses": {
+          "200": {
+            "description": "Storer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProducerLoginSuccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
                 }
               }
             }
@@ -207,6 +261,23 @@
           }
         }
       },
+      "ProducerLoginSuccess": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "$ref": "#/components/schemas/Producer"
+              }
+            }
+          }
+        }
+      },
       "DefaultSuccess": {
         "type": "object",
         "properties": {
@@ -243,7 +314,7 @@
       }
     },
     "requestBodies": {
-      "DtoStorer": {
+      "DtoLogin": {
         "description": "Storer email and password",
         "content": {
           "application/json": {
@@ -267,8 +338,35 @@
         },
         "required": true
       },
+      "DtoStorer": {
+        "description": "Storer dto",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      },
       "DtoProducer": {
-        "description": "Producer country, email, name and password",
+        "description": "Producer dto",
         "content": {
           "application/json": {
             "schema": {
@@ -294,7 +392,8 @@
               }
             }
           }
-        }
+        },
+        "required": true
       }
     }
   }

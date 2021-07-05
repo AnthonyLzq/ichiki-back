@@ -15,7 +15,7 @@ Storer.route('/storer/login').post(
     } = req
 
     try {
-      await signIn.validateAsync(args as DtoStorer)
+      await signIn.validateAsync(args)
       const s = new StorerC(args as DtoStorer)
       const result = await s.process({ type: 'login' })
 
