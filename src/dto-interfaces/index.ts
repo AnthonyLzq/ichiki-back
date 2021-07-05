@@ -1,3 +1,4 @@
-import { DtoStorer } from './storer.dto'
+import { DtoStorer } from './storer'
+import { DtoProducer } from './producer'
 
-export { DtoStorer }
+export { DtoStorer, DtoProducer }

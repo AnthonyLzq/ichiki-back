@@ -20,8 +20,7 @@ const Producer = new Schema(
     },
     name: {
       required: true,
-      type    : String,
-      unique  : true
+      type    : String
     },
     password: {
       required: true,

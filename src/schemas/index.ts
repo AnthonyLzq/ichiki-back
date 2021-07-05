@@ -1,10 +1,11 @@
 import Joi from 'joi'
 
-import { authUserSchema } from './signInUp'
+import { signIn, signUpProducer } from './signInUp'
 
 const id = Joi.string().required().length(24)
 
 export {
-  authUserSchema,
+  signIn,
+  signUpProducer,
   id as idSchema
 }

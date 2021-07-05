@@ -3,7 +3,7 @@ import httpErrors from 'http-errors'
 
 import { DtoStorer } from '../dto-interfaces'
 import { IStorer, StorerModel } from '../models'
-import { EFS, errorHandling } from './utils'
+import { GE, errorHandling } from './utils'
 
 interface Process {
   type: 'login'
@@ -17,7 +17,7 @@ class Storer {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): unknown {
+  public process({ type }: Process): Promise<IStorer> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'login':
@@ -33,17 +33,20 @@ class Storer {
       .digest('hex')
 
     try {
-      const foundUser = await StorerModel.findOne({
-        email,
-        password: hashedPassword
-      })
+      const foundStorer = await StorerModel.findOne(
+        {
+          email,
+          password: hashedPassword
+        },
+        '-__v -updatedAt -password'
+      )
 
-      if (!foundUser)
-        throw new httpErrors.NotFound(EFS.NOT_FOUND)
+      if (!foundStorer)
+        throw new httpErrors.NotFound(GE.NOT_FOUND)
 
-      return foundUser
+      return foundStorer
     } catch (e) {
-      return errorHandling(e, EFS.GENERIC)
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }
   }
 }

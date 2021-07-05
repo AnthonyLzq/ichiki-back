@@ -1,7 +1,7 @@
 ### Testing 404 error route
 GET http://localhost:1996/route/that/doesNotExists
 
-### Testing login route
+### Testing storer login route
 POST http://localhost:1996/api/storer/login
 Content-Type: application/json
 
@@ -9,5 +9,18 @@ Content-Type: application/json
   "args": {
     "email": "acecom.soporte@gmail.com",
     "password": "anthony&bryan"
+  }
+}
+
+### Testing producer signUp route
+POST http://localhost:1996/api/producer/signUp
+Content-Type: application/json
+
+{
+  "args": {
+    "email": "holi6@boli.com",
+    "password": "holi",
+    "country": "Peru",
+    "name": "ACECOM"
   }
 }

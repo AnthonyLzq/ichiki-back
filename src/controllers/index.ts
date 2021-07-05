@@ -1,3 +1,4 @@
 import { Storer } from './storer'
+import { Producer } from './producer'
 
-export { Storer }
+export { Storer, Producer }

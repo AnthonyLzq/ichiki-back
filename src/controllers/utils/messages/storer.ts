@@ -1,6 +1,3 @@
-enum ErrorForStorer {
-  GENERIC = 'Something went wrong',
-  NOT_FOUND = 'Invalid credentials'
-}
+enum ErrorForStorer {}
 
 export { ErrorForStorer as EFS }
