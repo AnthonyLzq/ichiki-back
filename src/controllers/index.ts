@@ -1,3 +1,3 @@
-import { User } from './user'
+import { Storer } from './storer'
 
-export { User }
+export { Storer }

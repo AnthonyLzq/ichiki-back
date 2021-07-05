@@ -2,7 +2,7 @@ import { Router, NextFunction } from 'express'
 
 import { Response, Request } from '../custom'
 import { response } from  '../utils'
-import { Storer as StorerC } from '../controllers/storer'
+import { Storer as StorerC } from '../controllers'
 import { DtoStorer } from '../dto-interfaces'
 import { authUserSchema } from '../schemas'
 
