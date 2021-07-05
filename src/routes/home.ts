@@ -7,7 +7,7 @@ Home.route('')
   .get((req: Request, res: Response) => {
     response(
       false,
-      'Welcome to your Express Backend!',
+      'Welcome to Ichiki\'s backend!',
       res,
       200
     )
