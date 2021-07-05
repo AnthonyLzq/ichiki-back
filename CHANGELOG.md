@@ -1,6 +1,14 @@
 # Ichiki back
 
 
+## [0.3.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.2.0...v0.3.0) (2021-07-05)
+
+
+### Features
+
+* implement producer login route ([853e0ab](https://github.com/AnthonyLzq/ichiki-back/commit/853e0ab20859a68c3b480874621568e8d9322370))
+* implement sign up for producer endpoint ([0371182](https://github.com/AnthonyLzq/ichiki-back/commit/0371182afe1aa1975a05fc2044905fa049540743))
+
 ## [0.2.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.1.1...v0.2.0) (2021-07-05)
 
 
