@@ -1,6 +1,13 @@
 # Ichiki back
 
 
+### [0.1.1](https://github.com/AnthonyLzq/ichiki-back/compare/v0.1.0...v0.1.1) (2021-07-05)
+
+
+### Bug Fixes
+
+* change name from the message of the home route ([d7d9382](https://github.com/AnthonyLzq/ichiki-back/commit/d7d93824d9ed0d2f976af5315b37cf4d123e013e))
+
 ## 0.1.0 (2021-07-05)
 
 
