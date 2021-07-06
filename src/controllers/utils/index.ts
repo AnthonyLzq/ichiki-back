@@ -1,6 +1,6 @@
 import httpErrors from 'http-errors'
 
-import { EFS, EFP, GE } from './messages'
+import { EFS, EFP, EFProducts, GE } from './messages'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const errorHandling = (error: any, message?: string): never => {
@@ -12,4 +12,4 @@ const errorHandling = (error: any, message?: string): never => {
   throw new httpErrors.InternalServerError(message ?? error.message)
 }
 
-export { EFS, EFP, GE, errorHandling }
+export { EFS, EFP, EFProducts, GE, errorHandling }

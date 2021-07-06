@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { DtoStorer } from '../dto-interfaces'
+import { DtoStorer, DtoProducer, DtoProduct } from '../dto-interfaces'
 
 /*
  * With this piece of code we ca personalize the attributes of the request,
@@ -8,7 +8,7 @@ import { DtoStorer } from '../dto-interfaces'
 
 interface CustomRequest extends Request {
   body: {
-    args?: DtoStorer
+    args?: DtoStorer | DtoProducer | DtoProduct
   }
 }
 

@@ -35,3 +35,17 @@ Content-Type: application/json
     "password": "holi"
   }
 }
+
+### Testing add product route
+POST http://localhost:1996/api/product/addProduct
+Content-Type: application/json
+
+{
+  "args": {
+    "description": "This is a test",
+    "name": "Test 2",
+    "price": 19.99,
+    "producer": "60e345d7861ccec771415378",
+    "stock": 2
+  }
+}
