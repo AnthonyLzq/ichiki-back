@@ -248,7 +248,7 @@
                 "properties": {
                   "args": {
                     "type": "string",
-                    "description": "DtoProduct without id in a JSON parseable form",
+                    "description": "DtoProduct in a JSON parseable form",
                     "example": "{ \"description\": \"This is a test\", \"name\": \"Test\", \"price\": 19.99, \"producer\": \"60e345d7861ccec771415378\", \"stock\": 2 }"
                   },
                   "image": {
@@ -267,6 +267,70 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AddProductWithoutImageSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/removeProduct/{idProduct}": {
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Let a producer remove one product",
+        "operationId": "removeProduct",
+        "parameters": [
+          {
+            "name": "idProduct",
+            "in": "path",
+            "description": "MongoDB product id.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultSuccess"
                 }
               }
             }

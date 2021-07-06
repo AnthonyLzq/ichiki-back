@@ -1,10 +1,11 @@
 interface DtoProduct {
-  description: string
-  image?     : Buffer
-  name       : string
-  price      : number
-  producer   : string
-  stock      : string
+  description?: string
+  id?         : string
+  image?      : Buffer
+  name?       : string
+  price?      : number
+  producer?   : string
+  stock?      : string
 }
 
 export { DtoProduct }

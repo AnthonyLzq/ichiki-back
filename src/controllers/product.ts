@@ -1,10 +1,10 @@
 import httpErrors from 'http-errors'
 import { DtoProduct } from '../dto-interfaces'
 import { IProduct, ProductModel } from '../models'
-import { EFProducts as EFP, GE, errorHandling } from './utils'
+import { EFProducts as EFP, GE, MFP, errorHandling } from './utils'
 
-interface Process {
-  type: 'addProduct'
+type Process = {
+  type: 'addProduct' | 'removeProduct'
 }
 
 class Product {
@@ -15,11 +15,13 @@ class Product {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): Promise<IProduct> {
+  public process({ type }: Process): Promise<IProduct> | Promise<string> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'addProduct':
         return this._addProduct()
+      case 'removeProduct':
+        return this._removeProduct()
     }
   }
 
@@ -49,6 +51,18 @@ class Product {
       })
 
       return await product.save()
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  private async _removeProduct(): Promise<string> {
+    const { id } = this._args as DtoProduct
+
+    try {
+      await ProductModel.findByIdAndDelete(id)
+
+      return MFP.REMOVE_SUCCESS
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

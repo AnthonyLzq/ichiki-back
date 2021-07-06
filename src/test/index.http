@@ -43,9 +43,12 @@ Content-Type: application/json
 {
   "args": {
     "description": "This is a test",
-    "name": "Test 8",
+    "name": "Test 11",
     "price": 19.99,
     "producer": "60e345d7861ccec771415378",
     "stock": 2
   }
 }
+
+### Testing remove product route
+DELETE http://localhost:1996/api/product/removeProduct/60e4d89c3e1233448af85f02

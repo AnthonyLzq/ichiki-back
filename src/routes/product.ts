@@ -6,7 +6,8 @@ import { Response, Request } from '../custom'
 import { response } from '../utils'
 import { Product as ProductC } from '../controllers'
 import { DtoProduct } from '../dto-interfaces'
-import { product } from '../schemas'
+import { idSchema, product } from '../schemas'
+import { IProduct } from '../models'
 
 const Product = Router()
 
@@ -28,7 +29,7 @@ Product.route('/product/addProductWithImage').post(
 
       await product.validateAsync(dtoProduct)
       const p = new ProductC(dtoProduct)
-      const result = await p.process({ type: 'addProduct' })
+      const result = await p.process({ type: 'addProduct' }) as IProduct
 
       response(
         false,
@@ -67,7 +68,7 @@ Product.route('/product/addProductWithoutImage').post(
     try {
       await product.validateAsync(args)
       const p = new ProductC(args as DtoProduct)
-      const result = await p.process({ type: 'addProduct' })
+      const result = await p.process({ type: 'addProduct' }) as IProduct
 
       response(
         false,
@@ -85,6 +86,25 @@ Product.route('/product/addProductWithoutImage').post(
         res,
         200
       )
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
+Product.route('/product/removeProduct/:id').delete(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      params: { id }
+    } = req
+
+    try {
+      await idSchema.validateAsync(id)
+      const p = new ProductC({ id } as DtoProduct)
+      const result = await p.process({ type: 'removeProduct' })
+
+      response(false, { result }, res, 200)
     } catch (e) {
       if (e.isJoi) e.status = 422
       next(e)
