@@ -15,7 +15,7 @@ class Product {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): unknown {
+  public process({ type }: Process): Promise<IProduct> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'addProduct':

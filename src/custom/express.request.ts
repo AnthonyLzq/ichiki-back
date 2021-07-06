@@ -8,7 +8,7 @@ import { DtoStorer, DtoProducer, DtoProduct } from '../dto-interfaces'
 
 interface CustomRequest extends Request {
   body: {
-    args?: DtoStorer | DtoProducer | DtoProduct
+    args?: DtoStorer | DtoProducer | DtoProduct | string
   }
 }
 

@@ -30,6 +30,10 @@
     {
       "name": "producer",
       "description": "Operations related to the producer"
+    },
+    {
+      "name": "product",
+      "description": "Operations related to the products"
     }
   ],
   "paths": {
@@ -184,6 +188,111 @@
           }
         }
       }
+    },
+    "/product/addProductWithoutImage": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Let a producer add products",
+        "operationId": "addProductWithoutImage",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/DtoProduct"
+        },
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddProductWithoutImageSuccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/addProductWithImage": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Let a producer add products",
+        "operationId": "addProductWithImage",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "string",
+                    "description": "DtoProduct without id in a JSON parseable form",
+                    "example": "{ \"description\": \"This is a test\", \"name\": \"Test\", \"price\": 19.99, \"producer\": \"60e345d7861ccec771415378\", \"stock\": 2 }"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddProductWithoutImageSuccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -278,6 +387,29 @@
           }
         }
       },
+      "AddProductWithoutImageSuccess": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "producer": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "integer"
+          }
+        }
+      },
       "DefaultSuccess": {
         "type": "object",
         "properties": {
@@ -315,7 +447,7 @@
     },
     "requestBodies": {
       "DtoLogin": {
-        "description": "Storer email and password",
+        "description": "Storer or producer email and password",
         "content": {
           "application/json": {
             "schema": {
@@ -386,6 +518,39 @@
                     },
                     "password": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      },
+      "DtoProduct": {
+        "description": "Product dto",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "producer": {
+                      "type": "string"
+                    },
+                    "stock": {
+                      "type": "integer"
                     }
                   }
                 }

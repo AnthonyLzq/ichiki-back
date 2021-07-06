@@ -37,13 +37,13 @@ Content-Type: application/json
 }
 
 ### Testing add product route
-POST http://localhost:1996/api/product/addProduct
+POST http://localhost:1996/api/product/addProductWithoutImage
 Content-Type: application/json
 
 {
   "args": {
     "description": "This is a test",
-    "name": "Test 2",
+    "name": "Test 8",
     "price": 19.99,
     "producer": "60e345d7861ccec771415378",
     "stock": 2

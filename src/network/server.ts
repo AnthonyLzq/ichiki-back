@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import upload from 'express-fileupload'
 
 import { applyRoutes } from './routes'
 
@@ -17,6 +18,7 @@ class Server {
     this._app.set('port', process.env.PORT as string || '1996')
     this._app.use(morgan('dev'))
     this._app.use(express.json())
+    this._app.use(upload())
     this._app.use(express.urlencoded({ extended: false }))
     this._app.use(
       (
