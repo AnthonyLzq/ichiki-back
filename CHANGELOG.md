@@ -1,6 +1,14 @@
 # Ichiki back
 
 
+## [0.4.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.3.0...v0.4.0) (2021-07-06)
+
+
+### Features
+
+* implement add product endpoint without image ([3ba90c4](https://github.com/AnthonyLzq/ichiki-back/commit/3ba90c45b66f6bb4717ca9c1216bbc7a2cfc226a))
+* refactor add product endpoint without image and implemented add product endpoint with image ([c7f8285](https://github.com/AnthonyLzq/ichiki-back/commit/c7f8285c8d07bfb71b61f99db501a0cb9606cc11))
+
 ## [0.3.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.2.0...v0.3.0) (2021-07-05)
 
 
