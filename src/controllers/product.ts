@@ -5,7 +5,7 @@ import { IProduct, ProductModel } from '../models'
 import { EFProducts as EFP, GE, MFP, errorHandling } from './utils'
 
 type Process = {
-  type: 'addProduct' | 'removeProduct' | 'updateStock'
+  type: 'addProduct' | 'removeProduct' | 'updateStock' | 'list'
 }
 
 class Product {
@@ -16,7 +16,9 @@ class Product {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): Promise<IProduct> | Promise<string> {
+  public process({
+    type
+  }: Process): Promise<IProduct[]> | Promise<IProduct> | Promise<string> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'addProduct':
@@ -25,6 +27,8 @@ class Product {
         return this._removeProduct()
       case 'updateStock':
         return this._updateStock()
+      case 'list':
+        return this._list()
     }
   }
 
@@ -86,14 +90,21 @@ class Product {
       if (foundProduct.stock + (stock as number) === 0)
         return await this._removeProduct()
 
-      await ProductModel.findByIdAndUpdate(
-        id,
-        {
-          stock: foundProduct.stock + (stock as number)
-        }
-      )
+      await ProductModel.findByIdAndUpdate(id, {
+        stock: foundProduct.stock + (stock as number)
+      })
 
       return MFP.STOCK_UPDATE_SUCCESS
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  private async _list(): Promise<IProduct[]> {
+    const { producer } = this._args as DtoProduct
+
+    try {
+      return await ProductModel.find({ producer })
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

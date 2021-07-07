@@ -35,9 +35,9 @@ Product.route('/product/addProductWithImage').post(
         false,
         {
           result: {
-            // eslint-disable-next-line no-underscore-dangle
-            _id        : result._id,
             description: result.description,
+            // eslint-disable-next-line no-underscore-dangle
+            id         : result._id,
             image      : result.image,
             name       : result.name,
             price      : result.price,
@@ -74,9 +74,9 @@ Product.route('/product/addProductWithoutImage').post(
         false,
         {
           result: {
-            // eslint-disable-next-line no-underscore-dangle
-            _id        : result._id,
             description: result.description,
+            // eslint-disable-next-line no-underscore-dangle
+            id         : result._id,
             name       : result.name,
             price      : result.price,
             producer   : result.producer,
@@ -124,6 +124,40 @@ Product.route('/product/updateStock').patch(
       const result = await p.process({ type: 'updateStock' })
 
       response(false, { result }, res, 200)
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
+Product.route('/product/list/:producer').get(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      params: { producer }
+    } = req
+
+    try {
+      await idSchema.validateAsync(producer)
+      const p = new ProductC({ producer } as DtoProduct)
+      const result = await p.process({ type: 'list' }) as IProduct[]
+
+      response(
+        false,
+        {
+          result: result.map(cProduct => ({
+            description: cProduct.description,
+            // eslint-disable-next-line no-underscore-dangle
+            id         : cProduct._id,
+            image      : cProduct.image || null,
+            name       : cProduct.name,
+            price      : cProduct.price,
+            stock      : cProduct.stock
+          }))
+        },
+        res,
+        200
+      )
     } catch (e) {
       if (e.isJoi) e.status = 422
       next(e)

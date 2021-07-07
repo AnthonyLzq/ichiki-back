@@ -63,3 +63,6 @@ Content-Type: application/json
     "stock": -1
   }
 }
+
+### Testing list products
+GET http://localhost:1996/api/product/list/60e345d7861ccec771415378

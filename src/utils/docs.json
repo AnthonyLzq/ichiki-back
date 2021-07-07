@@ -276,7 +276,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddProductWithoutImageSuccess"
+                  "$ref": "#/components/schemas/AddProductWithImageSuccess"
                 }
               }
             }
@@ -335,7 +335,7 @@
           {
             "name": "idProduct",
             "in": "path",
-            "description": "MongoDB product id.",
+            "description": "MongoDB product id",
             "required": true,
             "style": "simple",
             "explode": false,
@@ -473,6 +473,77 @@
           }
         }
       }
+    },
+    "/product/list/{producer}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "List the products from the producer",
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "producer",
+            "in": "path",
+            "description": "MongoDB producer id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products from producer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "result": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Product"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -480,7 +551,7 @@
       "Storer": {
         "type": "object",
         "properties": {
-          "_id": {
+          "id": {
             "type": "string"
           },
           "email": {
@@ -519,7 +590,7 @@
       "Producer": {
         "type": "object",
         "properties": {
-          "_id": {
+          "id": {
             "type": "string"
           },
           "country": {
@@ -530,6 +601,30 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "stock": {
+            "type": "integer"
           }
         }
       },
@@ -567,10 +662,37 @@
           }
         }
       },
+      "AddProductWithImageSuccess": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "producer": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "integer"
+          }
+        }
+      },
       "AddProductWithoutImageSuccess": {
         "type": "object",
         "properties": {
-          "_id": {
+          "id": {
             "type": "string"
           },
           "description": {

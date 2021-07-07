@@ -23,10 +23,10 @@ Producer.route('/producer/signUp').post(
         false,
         {
           result: {
-            // eslint-disable-next-line no-underscore-dangle
-            _id    : result._id,
             country: result.country,
             email  : result.email,
+            // eslint-disable-next-line no-underscore-dangle
+            id     : result._id,
             name   : result.name
           }
         },
@@ -51,7 +51,20 @@ Producer.route('/producer/login').post(
       const p = new ProducerC(args as DtoProducer)
       const result = await p.process({ type: 'login' })
 
-      response(false, { result }, res, 200)
+      response(
+        false,
+        {
+          result: {
+            country: result.country,
+            email  : result.email,
+            // eslint-disable-next-line no-underscore-dangle
+            id     : result._id,
+            name   : result.name
+          }
+        },
+        res,
+        200
+      )
     } catch (e) {
       if (e.isJoi) e.status = 422
       next(e)
