@@ -9,4 +9,9 @@ const product = Joi.object().keys({
   stock      : Joi.number().integer().required()
 })
 
-export { product }
+const updateStock = Joi.object().keys({
+  id   : Joi.string().length(24).required(),
+  stock: Joi.number().integer().required()
+})
+
+export { product, updateStock }

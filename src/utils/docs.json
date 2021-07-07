@@ -49,7 +49,7 @@
         },
         "responses": {
           "200": {
-            "description": "Storer",
+            "description": "Storer successfully logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -103,7 +103,7 @@
         },
         "responses": {
           "200": {
-            "description": "Storer",
+            "description": "Producer successfully registered",
             "content": {
               "application/json": {
                 "schema": {
@@ -147,7 +147,7 @@
         },
         "responses": {
           "200": {
-            "description": "Storer",
+            "description": "Producer successfully logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -201,11 +201,21 @@
         },
         "responses": {
           "200": {
-            "description": "Product",
+            "description": "Product added",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AddProductWithoutImageSuccess"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Product already registered for the producer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
                 }
               }
             }
@@ -262,7 +272,7 @@
         },
         "responses": {
           "200": {
-            "description": "Product",
+            "description": "Product added",
             "content": {
               "application/json": {
                 "schema": {
@@ -273,6 +283,16 @@
           },
           "400": {
             "description": "Missing image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Product already registered for the producer",
             "content": {
               "application/json": {
                 "schema": {
@@ -326,11 +346,107 @@
         ],
         "responses": {
           "200": {
-            "description": "Product",
+            "description": "Product removed",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DefaultSuccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/updateStock": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Let a producer update the product stock",
+        "operationId": "updateStock",
+        "requestBody": {
+          "description": "Product id and stock",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "stock": {
+                        "type": "integer",
+                        "description": "Stock to update, the specified amount will be added or subtracted"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Product stock updated or product removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Stock to update was 0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Not enough stock",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
                 }
               }
             }

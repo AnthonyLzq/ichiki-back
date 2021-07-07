@@ -5,7 +5,7 @@ import { DtoStorer } from '../dto-interfaces'
 import { IStorer, StorerModel } from '../models'
 import { GE, errorHandling } from './utils'
 
-interface Process {
+type Process = {
   type: 'login'
 }
 

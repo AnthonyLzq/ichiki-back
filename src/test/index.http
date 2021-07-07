@@ -52,3 +52,14 @@ Content-Type: application/json
 
 ### Testing remove product route
 DELETE http://localhost:1996/api/product/removeProduct/60e4d89c3e1233448af85f02
+
+### Testing update stock route
+PATCH http://localhost:1996/api/product/updateStock
+Content-Type: application/json
+
+{
+  "args": {
+    "id": "60e4ce962ba9e809c0479aa4",
+    "stock": -1
+  }
+}

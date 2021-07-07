@@ -5,7 +5,7 @@ import { DtoProducer } from '../dto-interfaces'
 import { IProducer, ProducerModel } from '../models'
 import { GE, errorHandling } from './utils'
 
-interface Process {
+type Process = {
   type: 'login' | 'signUp'
 }
 

@@ -6,7 +6,7 @@ import { Response, Request } from '../custom'
 import { response } from '../utils'
 import { Product as ProductC } from '../controllers'
 import { DtoProduct } from '../dto-interfaces'
-import { idSchema, product } from '../schemas'
+import { idSchema, product, updateStock } from '../schemas'
 import { IProduct } from '../models'
 
 const Product = Router()
@@ -103,6 +103,25 @@ Product.route('/product/removeProduct/:id').delete(
       await idSchema.validateAsync(id)
       const p = new ProductC({ id } as DtoProduct)
       const result = await p.process({ type: 'removeProduct' })
+
+      response(false, { result }, res, 200)
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
+Product.route('/product/updateStock').patch(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      body: { args }
+    } = req
+
+    try {
+      await updateStock.validateAsync(args)
+      const p = new ProductC(args as DtoProduct)
+      const result = await p.process({ type: 'updateStock' })
 
       response(false, { result }, res, 200)
     } catch (e) {

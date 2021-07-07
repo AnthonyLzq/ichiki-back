@@ -5,7 +5,7 @@ interface DtoProduct {
   name?       : string
   price?      : number
   producer?   : string
-  stock?      : string
+  stock?      : number
 }
 
 export { DtoProduct }
