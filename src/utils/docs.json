@@ -727,6 +727,113 @@
           }
         }
       }
+    },
+    "/warehouse/addProduct": {
+      "patch": {
+        "tags": [
+          "warehouse",
+          "product"
+        ],
+        "summary": "Let a producer add a product to his warehouse",
+        "operationId": "addProductToWarehouse",
+        "requestBody": {
+          "description": "Product id, warehouse id and stock",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "MongoDB warehouse id"
+                      },
+                      "pns": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "string",
+                            "description": "MongoDB product id"
+                          },
+                          "stock": {
+                            "type": "string",
+                            "description": "Quantity of items to buy"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Product stock updated or product removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Stock to update was 0 or negative",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product or warehouse not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Not enough stock",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

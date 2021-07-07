@@ -11,7 +11,7 @@ interface IWarehouse extends Document {
   country: string
   name   : string
   owner  : Types.ObjectId
-  pns    : IProductAndStock
+  pns    : IProductAndStock[]
 }
 
 const ProductAndStock = new Schema(

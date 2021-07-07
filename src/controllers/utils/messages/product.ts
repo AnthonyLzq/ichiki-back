@@ -7,7 +7,8 @@ enum ErrorForProducts {
 
 enum MessagesForProducts {
   REMOVE_SUCCESS = 'The product was successfully removed',
-  STOCK_UPDATE_SUCCESS = 'The stock was successfully updated'
+  STOCK_UPDATE_SUCCESS = 'The stock was successfully updated',
+  STOCK_UPDATE_SUCCESS_0 = 'The stock was successfully updated, no stock left',
 }
 
 export { ErrorForProducts as EFP, MessagesForProducts as MFP }

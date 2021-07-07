@@ -87,12 +87,15 @@ class Product {
       if (foundProduct.stock + (stock as number) < 0)
         throw new httpErrors.Conflict(EFP.NOT_ENOUGH)
 
-      if (foundProduct.stock + (stock as number) === 0)
-        return await this._removeProduct()
+      await ProductModel.findByIdAndUpdate(
+        id,
+        {
+          stock: foundProduct.stock + (stock as number)
+        }
+      )
 
-      await ProductModel.findByIdAndUpdate(id, {
-        stock: foundProduct.stock + (stock as number)
-      })
+      if (foundProduct.stock + (stock as number) === 0)
+        return MFP.STOCK_UPDATE_SUCCESS_0
 
       return MFP.STOCK_UPDATE_SUCCESS
     } catch (e) {

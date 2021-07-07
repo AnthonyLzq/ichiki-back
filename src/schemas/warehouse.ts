@@ -7,4 +7,14 @@ const addWarehouse = Joi.object().keys({
   owner  : Joi.string().length(24).required()
 })
 
-export { addWarehouse }
+const pns = Joi.object({
+  product: Joi.string().length(24).required(),
+  stock  : Joi.number().integer().required()
+}).required()
+
+const addProduct = Joi.object().keys({
+  id: Joi.string().length(24).required(),
+  pns
+})
+
+export { addWarehouse, addProduct }

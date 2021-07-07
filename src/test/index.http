@@ -85,3 +85,17 @@ DELETE http://localhost:1996/api/warehouse/removeWarehouse/60e587dfb2fb2ae4cc227
 
 ### Testing list warehouse from storer
 GET http://localhost:1996/api/warehouse/list/60e27730aeacd357571d940d
+
+### Testing add product to warehouse
+PATCH http://localhost:1996/api/warehouse/addProduct
+Content-Type: application/json
+
+{
+  "args": {
+    "id": "60e583b281bd9c4ebb5a8ae5",
+    "pns": {
+      "product": "60e3c84045bd7cf391f68995",
+      "stock": 1
+    }
+  }
+}

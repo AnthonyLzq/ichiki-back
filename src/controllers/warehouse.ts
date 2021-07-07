@@ -1,11 +1,13 @@
 import httpErrors from 'http-errors'
-import { DtoWarehouse } from '../dto-interfaces'
-import { IWarehouse, WarehouseModel } from '../models'
+
+import { DtoProductAndStock, DtoWarehouse } from '../dto-interfaces'
+import { IWarehouse, ProductModel, WarehouseModel } from '../models'
 import { EFW, GE, MFW, errorHandling } from './utils'
 import { Storer } from './storer'
+import { Product } from './product'
 
-interface Process {
-  type: 'addWarehouse' | 'removeWarehouse' | 'list'
+type Process = {
+  type: 'addWarehouse' | 'removeWarehouse' | 'list' | 'addProduct'
 }
 
 class Warehouse {
@@ -27,6 +29,8 @@ class Warehouse {
         return this._removeWarehouse()
       case 'list':
         return this._list()
+      case 'addProduct':
+        return this._addProduct()
     }
   }
 
@@ -71,6 +75,80 @@ class Warehouse {
 
     try {
       return await WarehouseModel.find({ owner })
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  private async _addProduct(): Promise<IWarehouse> {
+    const { id, pns } = this._args as DtoWarehouse
+    const { product, stock } = pns as DtoProductAndStock
+
+    try {
+      if (stock < 0)
+        throw new httpErrors.BadRequest(EFW.STOCK_NEGATIVE)
+
+      if (stock === 0)
+        throw new httpErrors.BadRequest(EFW.STOCK_0)
+
+      const foundProduct = await ProductModel.findById(product)
+
+      if (!foundProduct)
+        throw new httpErrors.NotFound(EFW.PRODUCT_NOT_FOUND)
+
+      if (foundProduct.stock === 0)
+        throw new httpErrors.Conflict(EFW.NO_PRODUCT_LEFT)
+
+      if (stock > foundProduct.stock)
+        throw new httpErrors.Conflict(EFW.PRODUCT_NOT_ENOUGH)
+
+      const foundWarehouse = await WarehouseModel.findById(id)
+
+      if (!foundWarehouse)
+        throw new httpErrors.NotFound(EFW.WAREHOUSE_NOT_FOUND)
+
+      let { pns: foundPns } = foundWarehouse
+      let updatedWarehouse: IWarehouse | null
+      const productIds = [...new Set(foundPns.map(f => f.product.toString()))]
+
+      if (!productIds.includes(product))
+        updatedWarehouse = await WarehouseModel.findByIdAndUpdate(
+          id,
+          {
+            $push: {
+              pns: {
+                price: foundProduct.price,
+                product,
+                stock
+              }
+            }
+          },
+          {
+            new: true
+          }
+        )
+      else {
+        foundPns = foundPns.map(f => {
+          if (f.product.toString() === product)
+            f.stock += stock
+
+          return f
+        })
+
+        updatedWarehouse = await WarehouseModel.findByIdAndUpdate(
+          id,
+          { pns: foundPns },
+          { new: true }
+        )
+      }
+
+      if (!updatedWarehouse)
+        throw new httpErrors.NotFound(EFW.WAREHOUSE_NOT_FOUND)
+
+      const p = new Product({ id: product, stock: -stock })
+      await p.process({ type: 'updateStock' })
+
+      return updatedWarehouse
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

@@ -1,6 +1,6 @@
 import { DtoStorer } from './storer'
 import { DtoProducer } from './producer'
 import { DtoProduct } from './product'
-import { DtoWarehouse } from './warehouse'
+import { DtoProductAndStock, DtoWarehouse } from './warehouse'
 
-export { DtoStorer, DtoProducer, DtoProduct, DtoWarehouse }
+export { DtoStorer, DtoProducer, DtoProduct, DtoProductAndStock, DtoWarehouse }

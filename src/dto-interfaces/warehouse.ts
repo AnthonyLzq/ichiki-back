@@ -13,4 +13,4 @@ interface DtoWarehouse {
   pns?    : DtoProductAndStock
 }
 
-export { DtoWarehouse }
+export { DtoProductAndStock, DtoWarehouse }

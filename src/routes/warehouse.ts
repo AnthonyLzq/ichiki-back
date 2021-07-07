@@ -4,7 +4,7 @@ import { Response, Request } from '../custom'
 import { response } from '../utils'
 import { Warehouse as WarehouseC } from '../controllers'
 import { DtoWarehouse } from '../dto-interfaces'
-import { addWarehouse, idSchema } from '../schemas'
+import { addProduct, addWarehouse, idSchema } from '../schemas'
 import { IWarehouse } from '../models'
 
 const Warehouse = Router()
@@ -83,6 +83,39 @@ Warehouse.route('/warehouse/list/:owner').get(
             name   : cWarehouse.name,
             pns    : cWarehouse.pns
           }))
+        },
+        res,
+        200
+      )
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
+Warehouse.route('/warehouse/addProduct').patch(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      body: { args }
+    } = req
+
+    try {
+      await addProduct.validateAsync(args)
+      const w = new WarehouseC(args as DtoWarehouse)
+      const result = await w.process({ type: 'addProduct' }) as IWarehouse
+
+      response(
+        false,
+        {
+          result: {
+            address: result.address,
+            country: result.country,
+            // eslint-disable-next-line no-underscore-dangle
+            id     : result._id,
+            name   : result.name,
+            pns    : result.pns
+          }
         },
         res,
         200
