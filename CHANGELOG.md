@@ -1,6 +1,15 @@
 # Ichiki back
 
 
+## [0.6.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.5.1...v0.6.0) (2021-07-07)
+
+
+### Features
+
+* implement add warehouse endpoint ([9fb949f](https://github.com/AnthonyLzq/ichiki-back/commit/9fb949f5f711d4356d2781cffa66bc633245615f))
+* implement endpoint to delete a warehouse ([4bfa18a](https://github.com/AnthonyLzq/ichiki-back/commit/4bfa18a2c577771517b8da311bfa94556760c619))
+* implement list warehouses from storer endpoint ([d39b604](https://github.com/AnthonyLzq/ichiki-back/commit/d39b6040f5a61946f0afcba33e2bd38b50097295))
+
 ### [0.5.1](https://github.com/AnthonyLzq/ichiki-back/compare/v0.5.0...v0.5.1) (2021-07-07)
 
 
