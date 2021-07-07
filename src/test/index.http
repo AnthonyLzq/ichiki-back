@@ -66,3 +66,16 @@ Content-Type: application/json
 
 ### Testing list products
 GET http://localhost:1996/api/product/list/60e345d7861ccec771415378
+
+### Testing create warehouse
+POST http://localhost:1996/api/warehouse/addWarehouse
+Content-Type: application/json
+
+{
+  "args": {
+    "name": "Warehouse 2",
+    "country": "Peru",
+    "address": "Av. Las Violetas 1196",
+    "owner": "60e27730aeacd357571d940d"
+  }
+}

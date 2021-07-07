@@ -22,7 +22,10 @@ const Storer = new Schema(
       required: true,
       type    : String
     },
-    warehouseIds: [Types.ObjectId]
+    warehouseIds: [{
+      ref : 'warehouses',
+      type: Types.ObjectId
+    }]
   },
   {
     timestamps: {

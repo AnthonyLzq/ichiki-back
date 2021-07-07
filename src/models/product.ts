@@ -25,6 +25,7 @@ const Product = new Schema(
       type    : Number
     },
     producer: {
+      ref     : 'producers',
       required: true,
       type    : Types.ObjectId
     },

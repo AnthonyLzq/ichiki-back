@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-parens */
 import crypto from 'crypto'
 import httpErrors from 'http-errors'
 
@@ -6,7 +7,7 @@ import { IStorer, StorerModel } from '../models'
 import { GE, errorHandling } from './utils'
 
 type Process = {
-  type: 'login'
+  type: 'login' | 'addWarehouse'
 }
 
 class Storer {
@@ -17,11 +18,13 @@ class Storer {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): Promise<IStorer> {
+  public process({ type }: Process): Promise<IStorer> | Promise<void> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'login':
         return this._login()
+      case 'addWarehouse':
+        return this._addWarehouse()
     }
   }
 
@@ -29,7 +32,7 @@ class Storer {
     const { email, password } = this._args as DtoStorer
     const hashedPassword = crypto
       .createHash('md5')
-      .update(password)
+      .update(password as string)
       .digest('hex')
 
     try {
@@ -45,6 +48,22 @@ class Storer {
         throw new httpErrors.NotFound(GE.NOT_FOUND)
 
       return foundStorer
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  private async _addWarehouse(): Promise<void> {
+    const { id, warehouseIds } = this._args as DtoStorer
+
+    try {
+      await StorerModel.findByIdAndUpdate(
+        id,
+        {
+          $push: { warehouseIds: (warehouseIds as string[])[0] }
+        }
+      )
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

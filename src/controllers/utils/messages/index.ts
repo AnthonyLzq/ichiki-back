@@ -1,6 +1,7 @@
 import { EFS } from './storer'
 import { EFP } from './producer'
 import { EFP as EFProducts, MFP } from './product'
+import { EFW, MFW } from './warehouse'
 
 enum GenericErrors {
   ALREADY_REGISTERED = 'That email is already registered',
@@ -8,4 +9,4 @@ enum GenericErrors {
   NOT_FOUND = 'Invalid credentials'
 }
 
-export { EFS, EFP, EFProducts, GenericErrors as GE, MFP }
+export { EFS, EFP, EFProducts, EFW, GenericErrors as GE, MFP, MFW }

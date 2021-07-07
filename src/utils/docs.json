@@ -10,7 +10,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "0.1.0"
+    "version": "0.5.1"
   },
   "servers": [
     {
@@ -33,7 +33,11 @@
     },
     {
       "name": "product",
-      "description": "Operations related to the products"
+      "description": "Operations related to products"
+    },
+    {
+      "name": "warehouse",
+      "description": "Operations related to warehouses"
     }
   ],
   "paths": {
@@ -544,6 +548,60 @@
           }
         }
       }
+    },
+    "/warehouse/addWarehouse": {
+      "post": {
+        "tags": [
+          "warehouse"
+        ],
+        "summary": "Let a storer add a new warehouse",
+        "operationId": "addWarehouse",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/DtoWarehouse"
+        },
+        "responses": {
+          "200": {
+            "description": "Warehouse registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddWarehouseSuccess"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Warehouse already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -712,6 +770,26 @@
           }
         }
       },
+      "AddWarehouseSuccess": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          }
+        }
+      },
       "DefaultSuccess": {
         "type": "object",
         "properties": {
@@ -853,6 +931,37 @@
                     },
                     "stock": {
                       "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      },
+      "DtoWarehouse": {
+        "description": "Warehouse dto",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "MongoDB storer id"
                     }
                   }
                 }

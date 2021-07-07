@@ -5,6 +5,7 @@ import { response } from '../utils'
 import { Storer as StorerC } from '../controllers'
 import { DtoStorer } from '../dto-interfaces'
 import { signIn } from '../schemas'
+import { IStorer } from '../models'
 
 const Storer = Router()
 
@@ -17,9 +18,22 @@ Storer.route('/storer/login').post(
     try {
       await signIn.validateAsync(args)
       const s = new StorerC(args as DtoStorer)
-      const result = await s.process({ type: 'login' })
+      const result = await s.process({ type: 'login' }) as IStorer
 
-      response(false, { result }, res, 200)
+      response(
+        false,
+        {
+          result: {
+            email       : result.email,
+            // eslint-disable-next-line no-underscore-dangle
+            id          : result._id,
+            name        : result.name,
+            warehouseIds: result.warehouseIds
+          }
+        },
+        res,
+        200
+      )
     } catch (e) {
       if (e.isJoi) e.status = 422
       next(e)

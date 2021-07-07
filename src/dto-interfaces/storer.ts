@@ -1,6 +1,8 @@
 interface DtoStorer {
-  email   : string
-  password: string
+  email?       : string
+  id?          : string
+  password?    : string
+  warehouseIds?: string[]
 }
 
 export { DtoStorer }
