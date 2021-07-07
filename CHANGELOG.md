@@ -1,6 +1,13 @@
 # Ichiki back
 
 
+### [0.5.1](https://github.com/AnthonyLzq/ichiki-back/compare/v0.5.0...v0.5.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* replace success response body for producer sign up in the documentation ([7278391](https://github.com/AnthonyLzq/ichiki-back/commit/7278391778f70eaf300fac273a9ddaf77a9b6fee))
+
 ## [0.5.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.4.0...v0.5.0) (2021-07-07)
 
 
