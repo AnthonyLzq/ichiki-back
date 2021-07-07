@@ -82,3 +82,6 @@ Content-Type: application/json
 
 ### Testing delete warehouse
 DELETE http://localhost:1996/api/warehouse/removeWarehouse/60e587dfb2fb2ae4cc227e0a
+
+### Testing list warehouse from storer
+GET http://localhost:1996/api/warehouse/list/60e27730aeacd357571d940d

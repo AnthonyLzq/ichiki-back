@@ -61,4 +61,37 @@ Warehouse.route('/warehouse/removeWarehouse/:id').delete(
   }
 )
 
+Warehouse.route('/warehouse/list/:owner').get(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      params: { owner }
+    } = req
+
+    try {
+      await idSchema.validateAsync(owner)
+      const w = new WarehouseC({ owner } as DtoWarehouse)
+      const result = await w.process({ type: 'list' }) as IWarehouse[]
+
+      response(
+        false,
+        {
+          result: result.map(cWarehouse => ({
+            address: cWarehouse.address,
+            country: cWarehouse.country,
+            // eslint-disable-next-line no-underscore-dangle
+            id     : cWarehouse._id,
+            name   : cWarehouse.name,
+            pns    : cWarehouse.pns
+          }))
+        },
+        res,
+        200
+      )
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
 export { Warehouse }

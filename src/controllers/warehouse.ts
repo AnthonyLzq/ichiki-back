@@ -5,7 +5,7 @@ import { EFW, GE, MFW, errorHandling } from './utils'
 import { Storer } from './storer'
 
 interface Process {
-  type: 'addWarehouse' | 'removeWarehouse'
+  type: 'addWarehouse' | 'removeWarehouse' | 'list'
 }
 
 class Warehouse {
@@ -16,13 +16,17 @@ class Warehouse {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): Promise<IWarehouse> | Promise<string> {
+  public process({
+    type
+  }: Process): Promise<IWarehouse[]> | Promise<IWarehouse> | Promise<string> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'addWarehouse':
         return this._addWarehouse()
       case 'removeWarehouse':
         return this._removeWarehouse()
+      case 'list':
+        return this._list()
     }
   }
 
@@ -57,6 +61,16 @@ class Warehouse {
       await WarehouseModel.findByIdAndDelete(id)
 
       return MFW.REMOVE_SUCCESS
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  private async _list(): Promise<IWarehouse[]> {
+    const { owner } = this._args as DtoWarehouse
+
+    try {
+      return await WarehouseModel.find({ owner })
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

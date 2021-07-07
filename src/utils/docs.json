@@ -484,7 +484,7 @@
           "product"
         ],
         "summary": "List the products from the producer",
-        "operationId": "list",
+        "operationId": "listProducts",
         "parameters": [
           {
             "name": "producer",
@@ -656,6 +656,77 @@
           }
         }
       }
+    },
+    "/warehouse/list/{owner}": {
+      "get": {
+        "tags": [
+          "warehouse"
+        ],
+        "summary": "Let an owner list his warehouses",
+        "operationId": "listWarehouses",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "MongoDB owner id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products from producer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "result": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Warehouse"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -737,6 +808,43 @@
           },
           "stock": {
             "type": "integer"
+          }
+        }
+      },
+      "Warehouse": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductAndStock"
+            }
+          }
+        }
+      },
+      "ProductAndStock": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "price": {
+            "type": "number"
           }
         }
       },
