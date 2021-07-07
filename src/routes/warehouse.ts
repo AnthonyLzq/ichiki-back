@@ -4,7 +4,7 @@ import { Response, Request } from '../custom'
 import { response } from '../utils'
 import { Warehouse as WarehouseC } from '../controllers'
 import { DtoWarehouse } from '../dto-interfaces'
-import { addWarehouse } from '../schemas'
+import { addWarehouse, idSchema } from '../schemas'
 import { IWarehouse } from '../models'
 
 const Warehouse = Router()
@@ -35,6 +35,25 @@ Warehouse.route('/warehouse/addWarehouse').post(
         res,
         200
       )
+    } catch (e) {
+      if (e.isJoi) e.status = 422
+      next(e)
+    }
+  }
+)
+
+Warehouse.route('/warehouse/removeWarehouse/:id').delete(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {
+      params: { id }
+    } = req
+
+    try {
+      await idSchema.validateAsync(id)
+      const w = new WarehouseC({ id } as DtoWarehouse)
+      const result = await w.process({ type: 'removeWarehouse' })
+
+      response(false, { result }, res, 200)
     } catch (e) {
       if (e.isJoi) e.status = 422
       next(e)

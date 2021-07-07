@@ -1,11 +1,11 @@
 import httpErrors from 'http-errors'
 import { DtoWarehouse } from '../dto-interfaces'
 import { IWarehouse, WarehouseModel } from '../models'
-import { EFW, GE, errorHandling } from './utils'
+import { EFW, GE, MFW, errorHandling } from './utils'
 import { Storer } from './storer'
 
 interface Process {
-  type: 'addWarehouse'
+  type: 'addWarehouse' | 'removeWarehouse'
 }
 
 class Warehouse {
@@ -16,11 +16,13 @@ class Warehouse {
   }
 
   // eslint-disable-next-line consistent-return
-  public process({ type }: Process): Promise<IWarehouse> {
+  public process({ type }: Process): Promise<IWarehouse> | Promise<string> {
     // eslint-disable-next-line default-case
     switch (type) {
       case 'addWarehouse':
         return this._addWarehouse()
+      case 'removeWarehouse':
+        return this._removeWarehouse()
     }
   }
 
@@ -43,6 +45,18 @@ class Warehouse {
       await s.process({ type: 'addWarehouse' })
 
       return newWarehouse
+    } catch (e) {
+      return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  private async _removeWarehouse(): Promise<string> {
+    const { id } = this._args as DtoWarehouse
+
+    try {
+      await WarehouseModel.findByIdAndDelete(id)
+
+      return MFW.REMOVE_SUCCESS
     } catch (e) {
       return errorHandling(e, GE.INTERNAL_SERVER_ERROR)
     }

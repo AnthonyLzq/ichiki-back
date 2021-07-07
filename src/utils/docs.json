@@ -602,6 +602,60 @@
           }
         }
       }
+    },
+    "/warehouse/removeWarehouse/{idWarehouse}": {
+      "delete": {
+        "tags": [
+          "warehouse"
+        ],
+        "summary": "Let a storer remove a warehouse",
+        "operationId": "removeWarehouse",
+        "parameters": [
+          {
+            "name": "idWarehouse",
+            "in": "path",
+            "description": "MongoDB warehouse id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Warehouse removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultSuccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

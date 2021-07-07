@@ -5,11 +5,12 @@ interface DtoProductAndStock {
 }
 
 interface DtoWarehouse {
-  address: string
-  country: string
-  name   : string
-  owner  : string
-  pns?   : DtoProductAndStock
+  address?: string
+  country?: string
+  id?     : string
+  name?   : string
+  owner?  : string
+  pns?    : DtoProductAndStock
 }
 
 export { DtoWarehouse }

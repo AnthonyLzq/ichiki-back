@@ -73,9 +73,12 @@ Content-Type: application/json
 
 {
   "args": {
-    "name": "Warehouse 2",
+    "name": "Warehouse 3",
     "country": "Peru",
     "address": "Av. Las Violetas 1196",
     "owner": "60e27730aeacd357571d940d"
   }
 }
+
+### Testing delete warehouse
+DELETE http://localhost:1996/api/warehouse/removeWarehouse/60e587dfb2fb2ae4cc227e0a
