@@ -107,7 +107,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StorerLoginSuccess"
+                  "$ref": "#/components/schemas/ProducerSignUpSuccess"
                 }
               }
             }
