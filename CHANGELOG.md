@@ -1,6 +1,15 @@
 # Ichiki back
 
 
+## [0.5.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.4.0...v0.5.0) (2021-07-07)
+
+
+### Features
+
+* implement list products from producer endpoint ([4347552](https://github.com/AnthonyLzq/ichiki-back/commit/43475529c2975f6679e383955cfb02f3bf635cf3))
+* implement remove product route for producer ([07f4cee](https://github.com/AnthonyLzq/ichiki-back/commit/07f4ceef69a7d467d18a94a1af791c5f89758bbe))
+* implement update stock endpoint for product and fixed some errors in the documentation ([b00e5e7](https://github.com/AnthonyLzq/ichiki-back/commit/b00e5e7ac3c2f446f423f39d96df1ea455028f74))
+
 ## [0.4.0](https://github.com/AnthonyLzq/ichiki-back/compare/v0.3.0...v0.4.0) (2021-07-06)
 
 
